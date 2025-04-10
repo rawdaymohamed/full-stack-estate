@@ -28,7 +28,7 @@ export const getChats = async (req, res) => {
       chat.receiver = receiver;
     }
 
-    res.status(200).json(chats);
+    return res.status(200).json(chats);
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Failed to get chats!" });
@@ -65,7 +65,7 @@ export const getChat = async (req, res) => {
         },
       },
     });
-    res.status(200).json(chat);
+    return res.status(200).json(chat);
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Failed to get chat!" });
@@ -80,7 +80,7 @@ export const addChat = async (req, res) => {
         userIDs: [tokenUserId, req.body.receiverId],
       },
     });
-    res.status(200).json(newChat);
+    return res.status(200).json(newChat);
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Failed to add chat!" });
@@ -90,7 +90,6 @@ export const addChat = async (req, res) => {
 export const readChat = async (req, res) => {
   const tokenUserId = req.userId;
 
-  
   try {
     const chat = await prisma.chat.update({
       where: {
@@ -105,7 +104,7 @@ export const readChat = async (req, res) => {
         },
       },
     });
-    res.status(200).json(chat);
+    return res.status(200).json(chat);
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Failed to read chat!" });

@@ -4,10 +4,10 @@ import bcrypt from "bcrypt";
 export const getUsers = async (req, res) => {
   try {
     const users = await prisma.user.findMany();
-    res.status(200).json(users);
+    return res.status(200).json(users);
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message: "Failed to get users!" });
+    return res.status(500).json({ message: "Failed to get users!" });
   }
 };
 
@@ -17,10 +17,10 @@ export const getUser = async (req, res) => {
     const user = await prisma.user.findUnique({
       where: { id },
     });
-    res.status(200).json(user);
+    return res.status(200).json(user);
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message: "Failed to get user!" });
+    return res.status(500).json({ message: "Failed to get user!" });
   }
 };
 
@@ -50,10 +50,10 @@ export const updateUser = async (req, res) => {
 
     const { password: userPassword, ...rest } = updatedUser;
 
-    res.status(200).json(rest);
+    return res.status(200).json(rest);
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message: "Failed to update users!" });
+    return res.status(500).json({ message: "Failed to update users!" });
   }
 };
 
@@ -69,10 +69,10 @@ export const deleteUser = async (req, res) => {
     await prisma.user.delete({
       where: { id },
     });
-    res.status(200).json({ message: "User deleted" });
+    return res.status(200).json({ message: "User deleted" });
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message: "Failed to delete users!" });
+    return res.status(500).json({ message: "Failed to delete users!" });
   }
 };
 
@@ -96,7 +96,7 @@ export const savePost = async (req, res) => {
           id: savedPost.id,
         },
       });
-      res.status(200).json({ message: "Post removed from saved list" });
+      return res.status(200).json({ message: "Post removed from saved list" });
     } else {
       await prisma.savedPost.create({
         data: {
@@ -104,11 +104,11 @@ export const savePost = async (req, res) => {
           postId,
         },
       });
-      res.status(200).json({ message: "Post saved" });
+      return res.status(200).json({ message: "Post saved" });
     }
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message: "Failed to delete users!" });
+    return res.status(500).json({ message: "Failed to delete users!" });
   }
 };
 
@@ -126,10 +126,10 @@ export const profilePosts = async (req, res) => {
     });
 
     const savedPosts = saved.map((item) => item.post);
-    res.status(200).json({ userPosts, savedPosts });
+    return res.status(200).json({ userPosts, savedPosts });
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message: "Failed to get profile posts!" });
+    return res.status(500).json({ message: "Failed to get profile posts!" });
   }
 };
 
@@ -148,9 +148,9 @@ export const getNotificationNumber = async (req, res) => {
         },
       },
     });
-    res.status(200).json(number);
+    return res.status(200).json(number);
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message: "Failed to get profile posts!" });
+    return res.status(500).json({ message: "Failed to get profile posts!" });
   }
 };
