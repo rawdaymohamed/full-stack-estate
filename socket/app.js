@@ -38,4 +38,5 @@ io.on("connection", (socket) => {
   });
 });
 
-io.listen("4000");
+io.listen(4000);
+console.log("Socket.IO server running on port 4000");
